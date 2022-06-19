@@ -6,9 +6,15 @@ Generates an RSS file from the list of other feeds (RSS/Atom/JSON). Very handy w
 
 1. Download the binary.
 
+### Linux
+
 ``` shell
 curl -o rssingle https://github.com/tanrax/RSSingle/releases/download/v1.0.0/rssingle
 ```
+
+### MacOS and Windows
+
+Coming soon
 
 2. Gives execution permissions.
 
