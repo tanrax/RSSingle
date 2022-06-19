@@ -1,37 +1,41 @@
-singlerss
-=========
+# RSSingle
 
-# Description
+Generates an RSS file from the list of other feeds (RSS/Atom/JSON). Very handy when you want to centralise the list of your feeds in one place and all your devices feed from the same place.
 
-singlerss combines all feeds described in a OPML file into one feed. This can
-either be outputted into `stdout` or a file, as specifed by program arguments,
-and configured by the environment variables.
+## Run
 
-# Configuration
+1. Download the binary.
 
-SingleRSS is configured by environment variables.
+``` shell
+wget 
+```
 
-See `.env.sample`. You _must_ copy `.env.sample` to `.env`.
+2. Gives execution permissions.
 
-`SINGLERSS_FEED_OUT_PATH` defines the relative OR absolute path to output the
-feed to, _IF_ `SINGLERSS_FEED_OUT_TYPE` is set to `file`. If
-`SINGLERSS_FEED_OUT_TYPE` is set to `stdout`, you must redirect output to the
-file you want it written to.
+``` shell
+chmod +x rssingle
+```
 
-`SINGLERSS_FEED_LIST_PATH` must be set to the input list of feeds you want to be
-collated into one feed. This _must_ be a newline delimited file of URLs.
+3. In the same directory as the binary, you can create a local `config.yml` file in this format:
 
-## Running
+``` yaml
+title: My RSS Feed
+description: My customised RSS feed with technology news
+feeds:
+  - https://programadorwebvalencia.com/feed/
+  - https://republicaweb.es/feed/
+```
 
-You may run this directly, after sourcing `.env` and exporting the variables,
-with `./singlerss.py`. Alternatively, I have provided a systemd unit and timer,
-which I will offer support for, and a basic crontab. I do not use cron, so I
-cannot offer support for it.
+If not, you can download the example in the repository.
 
-# Licensing
+4. Run the binary.
 
-This program is [licensed][license] under the Apache License 2.0.
+``` shell
+./rssingle 
+```
 
-Copyright (c) Dom Rodriguez (shymega) 2020.
+A file called `rss.xml` will be created.
 
-[license]: /LICENSE
+## Thanks
+
+@shymega for his original project [singlerss](https://github.com/shymega/singlerss).

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Copyright (c) Dom Rodriguez 2020
+# Copyright (c) Andros Fenollosa 2022
 # Licensed under the Apache License 2.0
 
 import os
@@ -11,15 +12,20 @@ import listparser
 from os import environ
 from feedgen.feed import FeedGenerator
 import json
+import yaml
+
+
+# Varaibles
 
 log = None
+CONFIG_PATH = "config.yml"
 LOG_LEVEL = environ.get("SR_LOG_LEVEl", "ERROR")
 fg = None
 FEED_OUT_PATH = None
-FEED_OUT_TYPE = None
 FEED_LIST_PATH = None
 FEEDS = []
 CFG = None
+
 
 
 
@@ -38,6 +44,11 @@ def setup_logging() -> None:
 
     return None
 
+def get_url_from_feed(config):
+    """
+    This function returns the URL from a feed.
+    """
+    return config["url"] + "/" + config["output"]
 
 def init_feed() -> None:
     """
@@ -51,11 +62,11 @@ def init_feed() -> None:
     try:
         fg = FeedGenerator()
         # Setup [root] feed attributes
-        fg.id("https://rss.shymega.org.uk/feed.xml")
-        fg.title("SingleRSS - Combined Feed")
-        fg.generator("SingleRSS/v1.0.0")
-        fg.link(href="https:/rss.shymega.org.uk/feed.xml", rel="self")
-        fg.subtitle("Combined feed for RSS feeds")
+        fg.id(get_url_from_feed(CONFIG))
+        fg.title(CONFIG["title"])
+        fg.generator("RSSingle/v1.0.0")
+        fg.link(get_url_from_feed(CONFIG), rel="self")
+        fg.subtitle(CONFIG["description"])
         fg.language('en')
     except:
         log.error("Error initialising the feed!")
@@ -80,7 +91,7 @@ def parse_rss_feed(url) -> feedparser.FeedParserDict:
 def main():
     log.debug("Loading feed list into memory..")
     feeds = None
-    with open(FEED_LIST_PATH, "r") as infile:
+    with open(CONFIG_PATH, "r") as infile:
         feeds = infile.read().splitlines()
 
     log.debug("Iterating over feed list..")
@@ -180,44 +191,39 @@ if __name__ == "__main__":
     setup_logging()
     log.debug("Initialising...")
 
+    global CONFIG
+
+    with open('config.yml', 'r') as file:
+        CONFIG = yaml.safe_load(file)
+
     log.debug("Assiging variables..")
     try:
-        # Configuration is specified with environemnt variables.
-        log.debug("Assignment attempt: SINGLERSS_FEED_OUT_PATH")
-        FEED_OUT_PATH = os.environ["SINGLERSS_FEED_OUT_PATH"]
+        # Configuration is specified with configure variables.
+        log.debug("Assignment attempt: output")
+        FEED_OUT_PATH = CONFIG["output"]
     except KeyError:
-        log.error("*** Environment variable missing! ***")
-        log.error("`SINGLERSS_FEED_OUT_PATH` variable missing.")
+        log.error("*** Configure variable missing! ***")
+        log.error("`output` variable missing.")
         log.error("This program will NOT run without that set.")
         sys.exit(1)
 
     try:
-        FEED_LIST_PATH = os.environ["SINGLERSS_FEED_LIST_PATH"]
+        FEED_LIST_PATH = CONFIG["url"]
     except:
-        log.error("*** Environment variable missing! ***")
-        log.error("`SINGLERSS_FEED_LIST_PATH` variable missing.")
+        log.error("*** Configure variable missing! ***")
+        log.error("`url` variable missing.")
         sys.exit(1)
 
     try:
-        FEED_OUT_TYPE = os.environ["SINGLERSS_FEED_OUT_TYPE"]
-    except KeyError:
-        log.error("*** Environment variable missing! ***")
-        log.error("`SINGLERSS_FEED_OUT_TYPE` variable missing.")
-        log.error("This program will NOT run without that set.")
+        FEED_LIST_PATH = CONFIG["feeds"]
+    except:
+        log.error("*** Configure variable missing! ***")
+        log.error("`feeds` variable missing.")
         sys.exit(1)
 
-    log.debug("Begin initialising variables..")
     init_feed()
 
     log.debug("Begin processing feeds...")
     main()
 
-    if FEED_OUT_TYPE == "stdout":
-        log.debug("stdout output specified, outputting to stdout.")
-        print(fg.rss_str().decode('utf-8'))
-    elif FEED_OUT_TYPE == "file":
-        log.debug("File output specified, outputting to specified file..")
-        fg.rss_file(FEED_OUT_PATH)
-    else:
-        log.error("Unknown type of output preference, cannot run.")
-        sys.exit(1)
+    fg.rss_file(FEED_OUT_PATH)
