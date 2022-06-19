@@ -1,2 +1,5 @@
 /.env
 rss.xml
+build/
+dist/
+rssingle.spec

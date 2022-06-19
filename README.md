@@ -36,6 +36,16 @@ If not, you can download the example in the repository.
 
 A file called `rss.xml` will be created.
 
+## Development
+
+### Compiling
+
+```shell
+pyinstaller --onefile rssingle.py
+```
+
+You will find the binary in `dist`.
+
 ## Thanks
 
 @shymega for his original project [singlerss](https://github.com/shymega/singlerss).
