@@ -27,8 +27,6 @@ FEEDS = []
 CFG = None
 
 
-
-
 def setup_logging() -> None:
     """
     This function intiialises the logger framework.
@@ -39,16 +37,20 @@ def setup_logging() -> None:
     log.setLevel(LOG_LEVEL)
     ch = logging.StreamHandler(sys.stderr)
     ch.setLevel(LOG_LEVEL)
-    ch.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    ch.setFormatter(
+        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    )
     log.addHandler(ch)
 
     return None
+
 
 def get_url_from_feed(config):
     """
     This function returns the URL from a feed.
     """
     return config["url"] + "/" + config["output"]
+
 
 def init_feed() -> None:
     """
@@ -65,9 +67,9 @@ def init_feed() -> None:
         fg.id(get_url_from_feed(CONFIG))
         fg.title(CONFIG["title"])
         fg.generator("RSSingle/v1.0.0")
-        fg.link(get_url_from_feed(CONFIG), rel="self")
+        fg.link(href=get_url_from_feed(CONFIG), rel="self")
         fg.subtitle(CONFIG["description"])
-        fg.language('en')
+        fg.language("en")
     except:
         log.error("Error initialising the feed!")
         sys.exit(1)
@@ -90,16 +92,10 @@ def parse_rss_feed(url) -> feedparser.FeedParserDict:
 
 def main():
     log.debug("Loading feed list into memory..")
-    feeds = None
-    with open(CONFIG_PATH, "r") as infile:
-        feeds = infile.read().splitlines()
 
     log.debug("Iterating over feed list..")
-    for feed in feeds:
-        FEEDS.append(feed)
 
-    log.debug("Iterating over [input] feeds...")
-    for feed in FEEDS:
+    for feed in CONFIG["feeds"]:
         rss = parse_rss_feed(feed)
         entries = rss.get("entries")
         log.debug("Iterating over [input] feed entries..")
@@ -130,7 +126,7 @@ def main():
                 # When we have a empty link attribute, this isn't ideal
                 # to set a default value.. :/
                 log.warning("Empty link attribute, defaulting..")
-                fe.link(href='about:blank')
+                fe.link(href="about:blank")
 
             try:
                 if entry["sources"]["authors"]:
@@ -149,8 +145,7 @@ def main():
                 # Sometimes we don't have ANY author attributes, so we
                 # have to set a dummy attribute.
                 log.warning("Empty authors attribute, defaulting..")
-                fe.author({"name": "Unspecified",
-                           "email": "unspecified@example.com"})
+                fe.author({"name": "Unspecified", "email": "unspecified@example.com"})
 
             try:
                 if entry["summary"]:
@@ -165,8 +160,7 @@ def main():
                 # have to set an empty value.
                 # This is pretty useless for a feed, so hopefully we
                 # don't have to do it often!
-                log.warning(
-                    "Empty description OR summary attribute, defaulting..")
+                log.warning("Empty description OR summary attribute, defaulting..")
                 fe.description("Unspecified")
                 fe.summary("Unspecified")
 
@@ -193,7 +187,7 @@ if __name__ == "__main__":
 
     global CONFIG
 
-    with open('config.yml', 'r') as file:
+    with open("config.yml", "r") as file:
         CONFIG = yaml.safe_load(file)
 
     log.debug("Assiging variables..")
