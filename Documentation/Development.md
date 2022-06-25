@@ -25,6 +25,8 @@ docker run              \
     "cd /app; pip3 install -r requirements.txt; pyinstaller --onefile rssingle.py"
 ```
 
+<br>
+
 You will find the binary in `/dist/`.
 
 <br>
