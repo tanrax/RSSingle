@@ -5,7 +5,7 @@
 
 ## Compiling
 
-*Commands are run from within the `/Source/` folder.*
+*Commands are run from within the  `/Source/`  folder.*
 
 <br>
 
@@ -17,7 +17,12 @@ pyinstaller --onefile rssingle.py
 ### Old Versions
 
 ```shell
-docker run --rm --volume $PWD:/app python:3.8-buster /bin/bash -c "cd /app; pip3 install -r requirements.txt; pyinstaller --onefile rssingle.py"
+docker run              \
+    --rm                \
+    --volume $PWD:/app  \
+    python:3.8-buster   \
+    /bin/bash -c        \
+    "cd /app; pip3 install -r requirements.txt; pyinstaller --onefile rssingle.py"
 ```
 
 You will find the binary in `/dist/`.
