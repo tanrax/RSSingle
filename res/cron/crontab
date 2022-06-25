@@ -1,5 +1,0 @@
-# For stdout to file
-0   *   *   *   * cd /opt/rss && . ./.env && /opt/rss/singlerss.py > /var/www/html/feeds.xml
-
-# For file direct.
-0   *   *   *   * cd /opt/rss && . ./.env && /opt/rss/singlerss.py
