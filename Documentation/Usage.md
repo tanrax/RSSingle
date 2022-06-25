@@ -1,6 +1,8 @@
 
 # Usage
 
+<br>
+
 1. Download the binary.
 
     ### Linux
@@ -16,6 +18,7 @@
     *Coming soon*
     
     <br>
+    <br>
 
 2. Gives execution permissions.
 
@@ -23,6 +26,7 @@
     chmod +x rssingle
     ```
     
+    <br>
     <br>
 
 3. In the same directory as the binary, you can <br>
@@ -44,6 +48,7 @@
     curl -o config.yml https://raw.githubusercontent.com/tanrax/RSSingle/master/config.yml
     ```
     
+    <br>
     <br>
 
 4. Run the binary.
