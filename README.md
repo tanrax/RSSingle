@@ -1,5 +1,5 @@
 
-# RSSingle
+# RSSingle   [![Badge License]][License]
 
 *Generate an **RSS** file from a list of other feeds.*
 
@@ -55,7 +55,13 @@
 [@shymega]: https://github.com/shymega
 
 [Development]: Documentation/Development.md
+[License]: LICENSE
 [Usage]: Documentation/Usage.md
+
+
+<!---------------------------------[ Badges ]---------------------------------->
+
+[Badge License]: https://img.shields.io/badge/License-Apache_2.0-D22128?style=for-the-badge
 
 
 <!--------------------------------[ Buttons ]---------------------------------->
