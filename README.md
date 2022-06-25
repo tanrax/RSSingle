@@ -1,15 +1,40 @@
+
 # RSSingle
 
-Generates an RSS file from the list of other feeds (RSS/Atom/JSON). Very handy when you want to centralise the list of your feeds in one place and all your devices feed from the same place.
+*Generate an **RSS** file from a list of other feeds.*
 
-<p align="center">
-  <img src="rssingle.png" width="200" alt="RRSingle">
-</p>
+<br>
 
+<img
+    width = 140
+    align = right
+    src = 'Resources/Logo.png'
+/>
 
+<br>
 
+*Very handy to centralize the list of* <br>
+*your feeds in one place and feed all* <br>
+*your devices feed from said place.*
 
+<br>
+<br>
+
+## Supported Feeds
+
+<kbd>  **JSON**  </kbd>   
+<kbd>  **Atom**  </kbd>   
+<kbd>  **RSS**  </kbd>
+
+<br>
+<br>
 
 ## Thanks
 
-@shymega for his original project [singlerss](https://github.com/shymega/singlerss).
+**[@shymega]** for his original project **[SingleRSS]**.
+
+
+<!----------------------------------------------------------------------------->
+
+[SingleRSS]: https://github.com/shymega/singlerss
+[@shymega]: https://github.com/shymega
