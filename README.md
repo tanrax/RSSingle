@@ -16,9 +16,11 @@ Generates an RSS file from the list of other feeds (RSS/Atom/JSON). Very handy w
 wget https://github.com/tanrax/RSSingle/releases/download/v1.0.0/rssingle
 ```
 
-**MacOS and Windows**
+**Windows**
 
-Coming soon
+``` shell
+wget https://github.com/tanrax/RSSingle/releases/download/v1.0.0/rssingle.exe
+```
 
 2. Gives execution permissions.
 
