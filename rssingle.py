@@ -45,7 +45,7 @@ def setup_logging() -> None:
     return None
 
 
-def get_url_from_feed(config):
+def get_url_from_feed(config) -> str:
     """
     This function returns the URL from a feed.
     """
