@@ -22,7 +22,6 @@ CONFIG_PATH = "config.yml"
 LOG_LEVEL = environ.get("SR_LOG_LEVEl", "ERROR")
 fg = None
 FEED_OUT_PATH = None
-FEED_LIST_PATH = None
 FEEDS = []
 CFG = None
 
@@ -199,20 +198,6 @@ if __name__ == "__main__":
         log.error("*** Configure variable missing! ***")
         log.error("`output` variable missing.")
         log.error("This program will NOT run without that set.")
-        sys.exit(1)
-
-    try:
-        FEED_LIST_PATH = CONFIG["url"]
-    except:
-        log.error("*** Configure variable missing! ***")
-        log.error("`url` variable missing.")
-        sys.exit(1)
-
-    try:
-        FEED_LIST_PATH = CONFIG["feeds"]
-    except:
-        log.error("*** Configure variable missing! ***")
-        log.error("`feeds` variable missing.")
         sys.exit(1)
 
     init_feed()
