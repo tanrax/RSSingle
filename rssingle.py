@@ -70,9 +70,8 @@ def init_feed() -> None:
         fg.link(href=get_url_from_feed(CONFIG), rel="self")
         fg.subtitle(CONFIG["description"])
         fg.language("en")
-    except:
-        log.error("Error initialising the feed!")
-        sys.exit(1)
+    except BaseException: # find out what exceptions FeedGenerator can cause as well as KeyError.
+        logging.exception("Error initialising the feed!")
 
     log.debug("Feed initialised!")
 
@@ -85,7 +84,7 @@ def parse_rss_feed(url) -> feedparser.FeedParserDict:
     try:
         # Hopefully this should parse..
         return feedparser.parse(url)
-    except Exception:
+    except BaseException: # find out what exceptions .parse() call can cause.
         log.warning("Failed to parse RSS feed.")
         # Now, we could handle gracefully.
 
@@ -108,21 +107,21 @@ def main():
 
             try:
                 fe.id(entry["id"])
-            except:
-                # Deifnitely weird...
+            except KeyError:
+                # Definitely weird...
                 log.warning("Empty id attribute, defaulting..")
                 fe.id("about:blank")
 
             try:
                 fe.title(entry["title"])
-            except:
+            except KeyError:
                 # OK, this is a definite malformed feed!
                 log.warning("Empty title attribute, defaulting..")
                 fe.title("Unspecified")
 
             try:
                 fe.link(href=entry["link"])
-            except:
+            except KeyError:
                 # When we have a empty link attribute, this isn't ideal
                 # to set a default value.. :/
                 log.warning("Empty link attribute, defaulting..")
@@ -136,12 +135,12 @@ def main():
                     try:
                         for author in entry["authors"]:
                             fe.author(author)
-                    except:
+                    except KeyError:
                         log.debug("Oh dear, a malformed feed! Adjusting.")
                         # This is a ugly hack to fix broken feed entries with the author attribute!
                         author["email"] = author.pop("href")
                         fe.author(author)
-            except:
+            except KeyError:
                 # Sometimes we don't have ANY author attributes, so we
                 # have to set a dummy attribute.
                 log.warning("Empty authors attribute, defaulting..")
@@ -155,7 +154,7 @@ def main():
                     fe.description(entry["description"])
                     fe.summary(entry["description"])
                     fe.content(entry["description"])
-            except:
+            except KeyError:
                 # Sometimes feeds don't provide a summary OR description, so we
                 # have to set an empty value.
                 # This is pretty useless for a feed, so hopefully we
@@ -169,11 +168,11 @@ def main():
                     try:
                         fe.published(entry["published"])
                         fe.updated(entry["published"])
-                    except:
+                    except KeyError:
                         fe.published("1970-01/01T00:00:00+00:00")
                         fe.updated("1970-01/01T00:00:00+00:00")
                         continue
-            except:
+            except KeyError:
                 # Sometimes feeds don't even provide a publish date, so we default to
                 # the start date &time of the Unix epoch.
                 log.warning("Empty publish attribute, defaulting..")
