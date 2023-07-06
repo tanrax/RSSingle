@@ -96,7 +96,7 @@ def main():
     for feed in CONFIG["feeds"]:
         rss = parse_rss_feed(feed)
         entries = rss.get("entries")
-        log.debug("Iterating over [input] feed entries..")
+        log.debug(f"Iterating over {feed} feed entries..")
         for entry in entries:
             log.debug("New feed entry created.")
 
@@ -171,7 +171,7 @@ def main():
                         fe.published("1970-01/01T00:00:00+00:00")
                         fe.updated("1970-01/01T00:00:00+00:00")
                         continue
-            except KeyError:
+            except Exception:
                 # Sometimes feeds don't even provide a publish date, so we default to
                 # the start date &time of the Unix epoch.
                 log.warning("Empty publish attribute, defaulting..")
