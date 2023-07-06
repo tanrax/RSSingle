@@ -97,7 +97,7 @@ def main():
         rss = parse_rss_feed(feed)
         entries = rss.get("entries")
         log.debug("Iterating over [input] feed entries..")
-        for entry in entries:
+        for entry in entries[:CONFIG["max_entries"]] if "max_entries" in CONFIG else entries:
             log.debug("New feed entry created.")
 
             fe = fg.add_entry()

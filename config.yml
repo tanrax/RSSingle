@@ -2,6 +2,7 @@ title: My RSS Feed
 description: My customised RSS feed with technology news
 url: https://www.example.com
 output: rss.xml
+max_entries: 2 # Delete this line to get all
 feeds:
   - https://programadorwebvalencia.com/feed/
   - https://republicaweb.es/feed/

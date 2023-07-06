@@ -35,6 +35,7 @@ title: My RSS Feed
 description: My customised RSS feed with technology news
 url: https://www.example.com
 output: rss.xml
+max_entries: 5 # Delete this line to get all
 feeds:
   - https://programadorwebvalencia.com/feed/
   - https://republicaweb.es/feed/
@@ -49,7 +50,7 @@ curl -o config.yml https://raw.githubusercontent.com/tanrax/RSSingle/master/conf
 4. Run the binary.
 
 ``` shell
-./rssingle 
+./rssingle
 ```
 
 A file called `rss.xml` will be created.
