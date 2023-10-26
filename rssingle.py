@@ -171,7 +171,7 @@ def main():
                         fe.published("1970-01/01T00:00:00+00:00")
                         fe.updated("1970-01/01T00:00:00+00:00")
                         continue
-            except KeyError:
+            except Exception:
                 # Sometimes feeds don't even provide a publish date, so we default to
                 # the start date &time of the Unix epoch.
                 log.warning("Empty publish attribute, defaulting..")

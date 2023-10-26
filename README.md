@@ -57,6 +57,12 @@ A file called `rss.xml` will be created.
 
 ## Development
 
+Activate Debug messages by console.
+
+```
+export SR_LOG_LEVEl=DEBUG
+```
+
 ### Compiling
 
 ```shell
