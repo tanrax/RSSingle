@@ -4,8 +4,16 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      gh-actions-deps:
+        patterns:
+          - "*"
       
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      python-deps:
+        patterns:
+          - "*"
