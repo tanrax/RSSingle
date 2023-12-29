@@ -87,6 +87,16 @@ def parse_rss_feed(url) -> feedparser.FeedParserDict:
         log.warning("Failed to parse RSS feed.")
         # Now, we could handle gracefully.
 
+def filter_feed_entries(entry) -> bool:
+    """
+    This function filters feed entries based on strings defined in config.yml.
+    """
+    filter_strings = CONFIG.get("filter_strings", [])
+    for filter_str in filter_strings:
+        if filter_str.lower() in entry.get("title", "").lower() or filter_str.lower() in entry.get("summary", "").lower():
+            log.debug(f"Entry filtered out: {entry['title']}")
+            return False
+    return True
 
 def main():
     log.debug("Loading feed list into memory..")
@@ -100,9 +110,13 @@ def main():
         for entry in entries[:CONFIG["max_entries"]] if "max_entries" in CONFIG else entries:
             log.debug("New feed entry created.")
 
+            if not filter_feed_entries(entry):
+                continue  # Skip this entry
+
             fe = fg.add_entry()
 
             log.debug("Working on new feed entry..")
+
 
             try:
                 fe.id(entry["id"])
