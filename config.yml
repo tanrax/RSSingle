@@ -6,3 +6,6 @@ max_entries: 2 # Delete this line to get all
 feeds:
   - https://programadorwebvalencia.com/feed/
   - https://republicaweb.es/feed/
+filter_strings:
+  - unwanted
+  - exclude_this
