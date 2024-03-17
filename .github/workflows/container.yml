@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-push-container-image:
     name: Build and push container image to Docker Hub and GHCR.io
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'tanrax/RSSingle' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -19,7 +19,7 @@ jobs:
         id: build
         uses: redhat-actions/buildah-build@v2
         with:
-          image: tanrax/rssingle
+          image: ${{ github.repository }}
           tags: latest
           containerfiles: Dockerfile
 
@@ -29,7 +29,7 @@ jobs:
           image: ${{ steps.build.outputs.image }}
           tags: ${{ steps.build.outputs.tags }}
           registry: docker.io
-          username: tanrax
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Push container image to GHCR.io
@@ -38,7 +38,7 @@ jobs:
           image: ${{ steps.build.outputs.image }}
           tags: ${{ steps.build.outputs.tags }}
           registry: ghcr.io
-          username: tanrax
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
           
