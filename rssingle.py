@@ -15,7 +15,7 @@ import json
 import yaml
 
 
-# Varaibles
+# Variables
 
 log = None
 CONFIG_PATH = "config.yml"
