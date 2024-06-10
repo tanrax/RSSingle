@@ -11,6 +11,7 @@ jobs:
     name: Build and push container image to Docker Hub and GHCR.io
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'tanrax/RSSingle' }}
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
